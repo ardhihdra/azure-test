@@ -7,17 +7,23 @@
     <title>Document</title>
 </head>
 <body>
-    <div  align="center">
-        <form method="POST" action="/user/new">
-            <div>Tell me your Name</div>
-            <input type="text" name="name" required>
-            <div>Tell me your Hobby</div>
-            <input type="text" name="hobby" required><br><br>
+    <div align="center">
+        <form method="POST" action="/book/new">
+            <div>Books Title</div>
+            <input type="text" name="title" required>
+            <div>Author</div>
+            <input type="text" name="author" required>
+            <div>Release Year</div>
+            <input type="text" name="release_year" required>
+            <div>Description</div>
+            <input type="text" name="description" required>
+            <div>Cover Image URL</div>
+            <input type="text" name="photo" required><br><br>
             <button type="submit">Submit</button><br><br>
         </form>
-        <form action="/users" method="get">
-            <input type="submit" value="See Hobbies" 
-                 name="getusers"/>
+        <form action="/books" method="get">
+            <input type="submit" value="See Books" 
+                 name="getbooks"/>
         </form> 
     </div>
 </body>

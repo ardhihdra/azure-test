@@ -1,0 +1,105 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Application API of Books Catalogue",
+      "description": "Books Catalogue public API",
+      "license": {
+        "name": "ardhi",
+        "url": "-"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Books",
+        "description": "API for books"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/books": {
+        "get": {
+          "tags": [
+            "Books"
+          ],
+          "summary": "Get all books in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Books"
+              }
+            }
+          }
+        }
+      },
+      "/book/new": {
+        "post": {
+            "tags": [
+                "Books"
+            ],
+            "description": "Input new book data",
+            "parameters": [
+                {
+                "name": "user",
+                "in": "body",
+                "description": "User that we want to create",
+                "schema": {
+                    "$ref": "#/definitions/Book"
+                }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "New user is created",
+                    "schema": {
+                        "$ref": "#/definitions/Book"
+                    }
+                }
+            }
+        }
+      }
+    },
+    "definitions": {
+      "Book": {
+        "required": [
+          "email",
+          "_id"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "release_year": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cover_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Books": {
+        "type": "array",
+        "$ref": "#/definitions/Book"
+      }
+    }
+  }

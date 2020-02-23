@@ -1,0 +1,6 @@
+{
+    "serviceName" : "booksearch-ardhi",
+    "adminKey" : "02CB6B6EC6F918D42C19FDE4BAE03D81",
+    "queryKey" : "0284BABD20A06E21205C41E782910451",
+    "indexName" : "azuresql-index"
+}
