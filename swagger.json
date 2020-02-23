@@ -9,7 +9,7 @@
         "url": "-"
       }
     },
-    "host": "localhost:3000",
+    "host": "https://bookscatalogue-ardhi.azurewebsites.net",
     "basePath": "/api/v1",
     "tags": [
       {
