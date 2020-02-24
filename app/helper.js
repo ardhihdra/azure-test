@@ -2,7 +2,7 @@
 const {  Request } = require('tedious');
 
 const helper = {
-    postData: function (req, res, connection) {
+  postData: function (req, res, connection) {
     const request = new Request(
       `INSERT INTO dbo.Book (title, author, release_year, description, cover_url)
        VALUES ('${req.body.title}', '${req.body.author}', '${req.body.release_year}', '${req.body.description}', '${req.body.cover_url}')`,

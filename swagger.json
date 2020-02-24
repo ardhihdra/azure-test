@@ -6,7 +6,7 @@
       "description": "Books Catalogue public API",
       "license": {
         "name": "ardhi",
-        "url": "-"
+        "url": "https://github.com/ardhihdra/azure-test"
       }
     },
     "host": "https://bookscatalogue-ardhi.azurewebsites.net",
@@ -27,7 +27,7 @@
       "application/json"
     ],
     "paths": {
-      "/books": {
+      "/catalogue": {
         "get": {
           "tags": [
             "Books"
@@ -41,44 +41,48 @@
               }
             }
           }
-        }
-      },
-      "/book/new": {
+        },
         "post": {
-            "tags": [
-                "Books"
-            ],
-            "description": "Input new book data",
-            "parameters": [
-                {
-                "name": "user",
-                "in": "body",
-                "description": "User that we want to create",
-                "schema": {
-                    "$ref": "#/definitions/Book"
+          "tags": [
+              "Books"
+          ],
+          "summary": "Post books in system",
+          "parameters": [
+              {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Book"
                 }
-                }
-            ],
-            "produces": [
-                "application/json"
-            ],
-            "responses": {
-                "200": {
-                    "description": "New user is created",
-                    "schema": {
-                        "$ref": "#/definitions/Book"
+              }
+          ],
+          "produces": [
+              "application/json"
+          ],
+          "responses": {
+              "200": {
+                  "description": "New user is created",
+                  "schema":  {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "description": "1 if success, 0 if failed"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "Ok Message"
+                      }
                     }
-                }
-            }
+                  }
+              }
+          }
         }
       }
     },
     "definitions": {
       "Book": {
-        "required": [
-          "email",
-          "_id"
-        ],
         "properties": {
           "title": {
             "type": "string"

@@ -1,5 +1,5 @@
 const helper = require('./helper');
-const { Connection } = require('tedious');
+const { Connection, Request } = require('tedious');
 const nconf = require('nconf');
 const AzureSearchClient = require('./AzureSearchClient.js');
 const indexDefinition = require('../books_quickstart_index.json');
@@ -46,7 +46,7 @@ app = {
             console.log('connected');
             helper.getData(req, res, connection);
           }
-      })      
+      });      
     },
     searchBook: async function(req, res) {
       console.log(req.body.search);
@@ -78,6 +78,75 @@ app = {
         }
         return config;
     },
+    getCatalogue: function(req, res) {
+      let connection = new Connection(config);
+      connection.on('connect', err => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('connected');
+            const request = new Request(
+              `SELECT TOP (100) *
+              FROM [dbo].[Book]`,
+              (err, rowCount, rows) => {
+                if (err) {
+                  // console.error(err.message);
+                  res.send({status: 0, message: err.message});
+                } else {
+                  console.log(`${rowCount} row(s) returned`);
+                  let response = []
+                  rows.forEach(function(values,index) {
+                    response.push({
+                      id : values[0].value,
+                      title : values[1].value,
+                      author : values[2].value,
+                      release_year : values[3].value,
+                      description : values[4].value,
+                      cover_url : values[5].value
+                    })
+                  });
+                  res.send({status: 1, data: response});
+                }
+              }
+            );
+            try {
+              connection.execSql(request);
+            } catch (err) {
+              console.log(err)
+              res.send({status: 0, message: err});
+            }
+          }
+      }) 
+    },
+    addCatalogue: function(req, res) {
+      let connection = new Connection(config);
+      connection.on('connect', err => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('connected');
+          const request = new Request(
+            `INSERT INTO dbo.Book (title, author, release_year, description, cover_url)
+             VALUES ('${req.body.title}', '${req.body.author}', '${req.body.release_year}', '${req.body.description}', '${req.body.cover_url}')`,
+            (err, rowCount) => {
+              if (err) {
+                console.error(err.message);
+                res.send({status: 0, message: err.message});
+              } else {
+                console.log(`${rowCount} row(s) returned`);
+                res.send({status: 1, data: 'OK'});
+              }
+            }
+          );
+          try {
+            connection.execSql(request);
+          } catch (err) {
+            console.log(err)
+            res.send({status: 0, message: err});
+          }
+        }
+      });    
+    }
 }
 
 module.exports = {
